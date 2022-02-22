@@ -17,33 +17,50 @@ class Budget:
         self.categories.append(dict_)
         self.write_csv()
 
-    def move_money_category(self, category, amount, category_new):
-        for category in self.categories:
-            if category == category['category']:
-                new_amount = int(category['amount'])-int(amount)
-                category['amount'] = str(new_amount)
-        
-        for category in self.categories:
-            if category_new == category['category']:
-                new_amount = int(category['amount']) + int(amount)
-                category['amount'] = str(new_amount)
-        self.write_csv()
+    def move_money_category(self, first_category, amount, second_category):
+        first_loop = False
+        second_loop = False
+        list_categories = []
+        for i in self.categories:
+            list_categories.append(i['category'])
+
+        if second_category in list_categories:
+            for first_dict in self.categories:
+                if first_category == first_dict['category']:
+                    less_amount = int(first_dict['amount'])-int(amount)
+                    first_dict['amount'] = str(less_amount)
+                    first_loop = True
+
+
+        if first_category in list_categories:
+            for second_dict in self.categories:
+                if second_category == second_dict['category']:
+                    new_amount = int(second_dict['amount']) + int(amount)
+                    second_dict['amount'] = str(new_amount)
+                    second_loop = True
+            
+        if second_loop and first_loop:
+            self.write_csv()
 
     def moving_money_income(self,category,amount):
-        not_category = True
-        real_amount = int(amount)
-        if (real_amount) <= self.income-self.sub_():
-            for categories in self.categories:
-                if categories['category'] == category:
-                    not_category = False
-                    categories['amount'] = amount
-        
-        else:
-            print('You dont have enough for that')
-        if not_category:
-            print('This is not a category')
-        self.write_csv()
-        print(self.sub_())
+        try:    
+            not_category = True
+            real_amount = int(amount)
+            if (real_amount) <= self.income-self.sub_():
+                for categories in self.categories:
+                    if categories['category'] == category:
+                        not_category = False
+                        category_amount = int(categories['amount'])
+                        category_amount += real_amount
+                        categories['amount'] = str(category_amount)
+            else:
+                print('You dont have enough for that')
+            if not_category:
+                print('This is not a category')
+            self.write_csv()
+        except:
+            print('invalid entry')
+
     def show_categories(self):
         print('———— Here is your Budget ————')
         print(f'Your total monthly income is: {self.income} Dollars')
@@ -76,7 +93,7 @@ class Budget:
     def menu(self):
         print('——— Welcome to Your Budget ———')
 
-        text = f'What would you like to do?\n1. add a new category\n2. move money into category from income\n3. move money from category into another category\n4. View Budget\n5. Exit\n'
+        text = f'What would you like to do?\n1. Add a New Category\n2. Move Money into Category from Income\n3. Move Money from Category into Another Category\n4. View Budget\n5. Exit\n'
 
         user_answer = input(text)
 
@@ -94,13 +111,17 @@ class Budget:
                     category = i['category']
                     print(f'{category} is a category')
                 user_category = input('choose a category from above\n')
-                print(f'{self.income-self.sub_()} here is how much you have free')
-                user_amount = input('choose an amount less than the money you have free\n')
+                print(f'{self.income-self.sub_()} here is how much money you have')
+                user_amount = input('choose a whole number amount less than the money you have free\n')
 
                 self.moving_money_income(user_category,user_amount)
                 user_answer = input(text)
             #move category moneys
             elif user_answer == '3':
+                for i in self.categories:
+                    category = i['category']
+                    money = i['amount']
+                    print(f'{category} is a category with {money} Dollars')
                 user_category = input('choose category to take from\n')
                 user_amount = input('choose a whole number amount\n')
                 user_new_category = input('choose category to add to\n')
@@ -117,7 +138,5 @@ class Budget:
             else:
                 print('that is not an option')
                 user_answer = input(text)
-
-
 
 
