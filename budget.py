@@ -41,6 +41,8 @@ class Budget:
             
         if second_loop and first_loop:
             self.write_csv()
+        else:
+            print('Invalid Entry')
 
     def moving_money_income(self,category,amount):
         try:    
