@@ -1,9 +1,6 @@
-from inspect import BoundArguments
-from budget import Budget
-from addingStuff import AddingStuff
 
-
-
+from Budget import Budget
+from AddingStuff import AddingStuff
 class Menu(Budget,AddingStuff):
     def __init__(self, income):
         super().__init__(income)
@@ -48,9 +45,7 @@ class Menu(Budget,AddingStuff):
                 self.move_money_category(user_category,user_amount,user_new_category)
             #show categories/ turns into show budget eventually
             elif user_answer == '4':
-                self.show_budget()
-
-            
+                self.show_budget()            
             elif user_answer == '5':
                 for i in self.load_csv():
                     category = i['category']
@@ -64,8 +59,6 @@ class Menu(Budget,AddingStuff):
 
             else:
                 print('that is not an option')
-                user_answer = input(text)
-
             user_answer = input(text)
 
             

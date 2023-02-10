@@ -1,6 +1,6 @@
 import csv
 import pandas as pd
-from addingStuff import AddingStuff 
+from AddingStuff import AddingStuff 
 
 class Budget(AddingStuff):
     def __init__(self, income):
@@ -16,10 +16,6 @@ class Budget(AddingStuff):
     def move_money_category(self, first_category, amount, second_category):
         first_loop = False
         second_loop = False
-        # list_categories = []
-        # for i in self.categories:
-        #     list_categories.append(i['category'])
-
         if second_category in self.load_csv():
             for first_dict in self.categories:
                 if first_category == first_dict['category']:
