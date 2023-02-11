@@ -1,17 +1,13 @@
 
-from Budget import Budget
-from AddingStuff import AddingStuff
+from budget import Budget
+from adding_stuff import AddingStuff
 class Menu(Budget,AddingStuff):
     def __init__(self, income):
         super().__init__(income)
-
     def menu(self):
         print('——— Welcome to Your Budget ———')
-
         text = f'What would you like to do?\n1. Add a New Category\n2. Move Money into Category from Income\n3. Move Money from Category into Another Category\n4. View Budget\n5. Delete Category\n6. Exit\n'
-
         user_answer = input(text)
-
         while True:
             #add a category
             if user_answer == '1':
@@ -31,7 +27,6 @@ class Menu(Budget,AddingStuff):
                 #show the categories to the users
                 user_category = input('choose a category from above\n')
                 user_amount = input('choose a whole number amount less than the money you have free\n')
-
                 self.moving_money_income(user_category,user_amount)
             #move category moneys
             elif user_answer == '3':
@@ -56,7 +51,6 @@ class Menu(Budget,AddingStuff):
             elif user_answer == '6':
                 print('thank you come again')
                 break
-
             else:
                 print('that is not an option')
             user_answer = input(text)

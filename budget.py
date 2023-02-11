@@ -1,8 +1,8 @@
 import csv
 import pandas as pd
-from AddingStuff import AddingStuff 
+from expense import Expense
 
-class Budget(AddingStuff):
+class Budget:
     def __init__(self, income):
         super().__init__()
         self.income = income
