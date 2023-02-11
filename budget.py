@@ -2,71 +2,87 @@ import csv
 import pandas as pd
 from expense import Expense
 
+"""
+!add expenses to the expense list
+"""
+
 class Budget:
-    def __init__(self, income):
-        super().__init__()
-        self.income = income
+    def __init__(self, amount):
+        self.total_amount = amount
+        self.amount_left = amount
+        self.expense_list = []
+    def add_expense(self, expense_name):
+        new_expense = Expense(expense_name)
+        self.expense_list.append(new_expense)
+        # print(self.expense_list)
+        return self.expense_list
+    """
+    Here you need to move money from one expense to the other
+    first you need to check to make sure the expenses exist in the list
+    """
+    def move_money(
+        self, 
+        first_category, 
+        amount, 
+        second_category
+        ):
+        pass
+    def deposit_expense(self,expense_name,amount):
+        does_not_exists = True
+        amount = int(amount)
+        for i in self.expense_list:
+            if i.expense_name == expense_name:
+                i.value += amount
+                self.amount_left -= amount
+                does_not_exists = False
 
+        if(does_not_exists):
+            print("<<< Not Here >>>")
 
-    def add_category(self, dict_):
-        self.categories.append(dict_)
-        print(self.categories)
-        self.write_csv()
-
-    def move_money_category(self, first_category, amount, second_category):
-        first_loop = False
-        second_loop = False
-        if second_category in self.load_csv():
-            for first_dict in self.categories:
-                if first_category == first_dict['category']:
-                    less_amount = int(first_dict['amount'])-int(amount)
-                    first_dict['amount'] = str(less_amount)
-                    first_loop = True
-
-
-        if first_category in self.categories:
-            for second_dict in self.categories:
-                if second_category == second_dict['category']:
-                    new_amount = int(second_dict['amount']) + int(amount)
-                    second_dict['amount'] = str(new_amount)
-                    second_loop = True
+        
             
-        if second_loop and first_loop:
-            self.write_csv()
-        else:
-            print('Invalid Entry')
-
-    def moving_money_income(self,category,amount):
-        try:    
-            not_category = True
-            real_amount = int(amount)
-            if (real_amount) <= self.income-self.sub_():
-                for categories in self.categories:
-                    if categories['category'] == category:
-                        not_category = False
-                        category_amount = int(categories['amount'])
-                        category_amount += real_amount
-                        categories['amount'] = str(category_amount)
-            else:
-                print('You dont have enough for that')
-            if not_category:
-                print('This is not a category')
-            self.write_csv()
-        except:
-            print('invalid entry')
-
+        pass
     def show_budget(self):
-        print('———— Here is your Budget ————')
-        print(f'Your total monthly income is: {self.income} Dollars')
-        for i in self.load_csv():
-            category = i['category']
-            amount = i['amount']
-            print(f' {category} || {amount} Dollars')
-        print(f'and you have {self.income - self.sub_()} Dollars left')
-        print('——— END ———')
-    
-    def show_money_left(self):
-        print(self.income - self.sub_())
+        print(f"Budget Amount: {self.total_amount}")
+        print(f"Amount Left: {self.amount_left}")
+        for i in self.expense_list:
+            print(i)
+
+    def menu(self):
+        print('——— Welcome to Your Budget ———')
+        text = (
+"""What would you like to do?
+1. Show Budget
+2. Add Expense
+3. Deposit Money to Expense
+4. Move Money from One Expense to Another
+""")     
+        user_answer = input(text)
+        while True:
+            #add a category
+            if user_answer == '1':
+                self.show_budget()
+                pass
+            elif user_answer == '2':
+                # add expense
+                new_expense = input("Expense name?\n")
+                self.add_expense(new_expense)
+                pass
+            elif user_answer == '3':
+                #deposit money into expense
+                expense = input("choose expense\n")
+                amount = input("choose an amount\n")
+                self.deposit_expense(expense,amount)
+                pass
+            #show categories/ turns into show budget eventually
+            elif user_answer == '4':           
+                pass
+            user_answer = input(text)
+
+
+
+
+            
 
 
         

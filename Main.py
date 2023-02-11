@@ -1,7 +1,7 @@
 
-from Menu import Menu
+from budget import Budget
+from expense import Expense
 
-my_income = 3800
-my_budget = Menu(my_income)
 
-my_budget.menu()
+first_budget = Budget(3000)
+first_budget.menu()
